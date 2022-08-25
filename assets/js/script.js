@@ -42,10 +42,12 @@ var humidity4 = document.querySelector("#humidityForecast4");
 var humidity5 = document.querySelector("#humidityForecast5");
 //   //   console.log(input[0].toUpperCase());
 // }
-searchBtn.addEventListener("click", get);
+searchBtn.addEventListener("click", function () {
+  get(cityName.value);
+});
 
-function get() {
-  var requestUrl5 = `https://api.weatherbit.io/v2.0/forecast/daily?days=5&units=I&city=${cityName.value}&key=${APIkeyForecast}`;
+function get(link) {
+  var requestUrl5 = `https://api.weatherbit.io/v2.0/forecast/daily?days=5&units=I&city=${link}&key=${APIkeyForecast}`;
   fetch(requestUrl5)
     .then(function (res) {
       console.log(res);
@@ -56,7 +58,7 @@ function get() {
       function text() {
         var i = 0;
 
-        date.textContent = cityName.value + "(" + data.data[i].datetime + ")";
+        date.textContent = link + "(" + data.data[i].datetime + ")";
         temp.textContent = "TEMP: " + data.data[i].temp + "℉";
         wind.textContent = "WIND: " + data.data[i].wind_spd + " MPH";
         humidity.textContent = "HUMIDITY: " + data.data[i].rh + "%";
@@ -108,7 +110,7 @@ function get() {
       if (index < 5) {
         history();
         index++;
-        console.log(index);
+        // console.log(index);
       } else if (index == 5) {
         index = 0;
         history();
@@ -119,8 +121,17 @@ function get() {
     });
 }
 
-searchBtn.addEventListener("click", get);
+document.querySelector(".list-group").addEventListener("click", function (e) {
+  get(e.target.textContent);
+});
+// when any history button is clicked
 
+//   date.textContent = cityName.value + "(" + data.data[i].datetime + ")";
+//   temp.textContent = "TEMP: " + data.data[i].temp + "℉";
+//   wind.textContent = "WIND: " + data.data[i].wind_spd + " MPH";
+//   humidity.textContent = "HUMIDITY: " + data.data[i].rh + "%";
+
+// clicked();
 // searched1.addEventListener("click", test);
 
 // var lastCity1 = JSON.parse(localStorage.getItem("city1"));
