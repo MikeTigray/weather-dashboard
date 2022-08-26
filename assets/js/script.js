@@ -44,23 +44,24 @@ var searchHistory = [searched1, searched2, searched3, searched4, searched5];
 //Array of strings to use as storage in local storage
 var storage = ["city1", "city2", "city3", "city4", "city5"];
 
-var lastCity1 = JSON.parse(localStorage.getItem(storage[0]));
-var lastCity2 = JSON.parse(localStorage.getItem(storage[1]));
-var lastCity3 = JSON.parse(localStorage.getItem(storage[2]));
-var lastCity4 = JSON.parse(localStorage.getItem(storage[3]));
-var lastCity5 = JSON.parse(localStorage.getItem(storage[4]));
-// searched1.textContent = lastCity1;
-// searched2.textContent = lastCity2;
-// searched3.textContent = lastCity3;
-// searched4.textContent = lastCity4;
-// searched5.textContent = lastCity5;
-
-var retrieved = [lastCity1, lastCity2, lastCity3, lastCity4, lastCity5];
+function display() {
+  var lastCity1 = JSON.parse(localStorage.getItem(storage[0]));
+  var lastCity2 = JSON.parse(localStorage.getItem(storage[1]));
+  var lastCity3 = JSON.parse(localStorage.getItem(storage[2]));
+  var lastCity4 = JSON.parse(localStorage.getItem(storage[3]));
+  var lastCity5 = JSON.parse(localStorage.getItem(storage[4]));
+  //   var retrieved = [lastCity1, lastCity2, lastCity3, lastCity4, lastCity5];
+  searched1.textContent = lastCity1;
+  searched2.textContent = lastCity2;
+  searched3.textContent = lastCity3;
+  searched4.textContent = lastCity4;
+  searched5.textContent = lastCity5;
+}
 
 searchBtn.addEventListener("click", function () {
   get(cityName.value);
 });
-
+display();
 function get(link) {
   var requestUrl5 = `https://api.weatherbit.io/v2.0/forecast/daily?days=5&units=I&city=${link}&key=${APIkeyForecast}`;
   fetch(requestUrl5)
@@ -120,6 +121,7 @@ function get(link) {
       }
       if (index < 5) {
         history();
+        display();
 
         cityName.value = "";
         searchHistory[index].textContent = retrieved[index];
@@ -128,6 +130,7 @@ function get(link) {
       } else if (index == 5) {
         index = 0;
         history();
+        display();
 
         cityName.value = "";
         searchHistory[index].textContent = retrieved[index];
@@ -139,9 +142,10 @@ function get(link) {
 document.querySelector(".list-group").addEventListener("click", function (e) {
   get(e.target.textContent);
 });
+display();
 
-console.log("city 1 is - " + lastCity1);
-console.log("city 2 is - " + lastCity2);
-console.log("city 3 is - " + lastCity3);
-console.log("city 4 is - " + lastCity4);
-console.log("city 5 is - " + lastCity5);
+// console.log("city 1 is - " + lastCity1);
+// console.log("city 2 is - " + lastCity2);
+// console.log("city 3 is - " + lastCity3);
+// console.log("city 4 is - " + lastCity4);
+// console.log("city 5 is - " + lastCity5);
