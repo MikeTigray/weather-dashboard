@@ -1,13 +1,5 @@
 var APIkey = "7f6f2d99953fc081fdbbf025eed2d11f";
 var APIkeyForecast = "0e0e192396f34de1bf07cb631356eb62";
-var searchBtn = document.querySelector("#searchBtn");
-var searched1 = document.querySelector("#searched1");
-var searched2 = document.querySelector("#searched2");
-var searched3 = document.querySelector("#searched3");
-var searched4 = document.querySelector("#searched4");
-var searched5 = document.querySelector("#searched5");
-var searchHistory = [searched1, searched2, searched3, searched4, searched5];
-var storage = ["city1", "city2", "city3", "city4", "city5"];
 
 var cityName = document.querySelector("#cityName");
 var index = 0;
@@ -40,8 +32,31 @@ var humidity2 = document.querySelector("#humidityForecast2");
 var humidity3 = document.querySelector("#humidityForecast3");
 var humidity4 = document.querySelector("#humidityForecast4");
 var humidity5 = document.querySelector("#humidityForecast5");
-//   //   console.log(input[0].toUpperCase());
-// }
+
+var searchBtn = document.querySelector("#searchBtn");
+var searched1 = document.querySelector("#searched1");
+var searched2 = document.querySelector("#searched2");
+var searched3 = document.querySelector("#searched3");
+var searched4 = document.querySelector("#searched4");
+var searched5 = document.querySelector("#searched5");
+//Array that stores search history buttons with ids
+var searchHistory = [searched1, searched2, searched3, searched4, searched5];
+//Array of strings to use as storage in local storage
+var storage = ["city1", "city2", "city3", "city4", "city5"];
+
+var lastCity1 = JSON.parse(localStorage.getItem(storage[0]));
+var lastCity2 = JSON.parse(localStorage.getItem(storage[1]));
+var lastCity3 = JSON.parse(localStorage.getItem(storage[2]));
+var lastCity4 = JSON.parse(localStorage.getItem(storage[3]));
+var lastCity5 = JSON.parse(localStorage.getItem(storage[4]));
+// searched1.textContent = lastCity1;
+// searched2.textContent = lastCity2;
+// searched3.textContent = lastCity3;
+// searched4.textContent = lastCity4;
+// searched5.textContent = lastCity5;
+
+var retrieved = [lastCity1, lastCity2, lastCity3, lastCity4, lastCity5];
+
 searchBtn.addEventListener("click", function () {
   get(cityName.value);
 });
@@ -101,55 +116,32 @@ function get(link) {
 
       //This function displays search history and store cities input into local storage
       function history() {
-        searchHistory[index].textContent = cityName.value;
-        localStorage.setItem(
-          storage[index],
-          JSON.stringify(searchHistory[index].textContent)
-        );
+        localStorage.setItem(storage[index], JSON.stringify(cityName.value));
       }
       if (index < 5) {
         history();
+
+        cityName.value = "";
+        searchHistory[index].textContent = retrieved[index];
         index++;
         // console.log(index);
       } else if (index == 5) {
         index = 0;
         history();
+
+        cityName.value = "";
+        searchHistory[index].textContent = retrieved[index];
         index++;
       }
-
-      cityName.value = "";
     });
 }
 
 document.querySelector(".list-group").addEventListener("click", function (e) {
   get(e.target.textContent);
 });
-// when any history button is clicked
 
-//   date.textContent = cityName.value + "(" + data.data[i].datetime + ")";
-//   temp.textContent = "TEMP: " + data.data[i].temp + "℉";
-//   wind.textContent = "WIND: " + data.data[i].wind_spd + " MPH";
-//   humidity.textContent = "HUMIDITY: " + data.data[i].rh + "%";
-
-// clicked();
-// searched1.addEventListener("click", test);
-
-// var lastCity1 = JSON.parse(localStorage.getItem("city1"));
-// searched1.textContent = lastCity1;
-
-// function store2() {
-//   localStorage.setItem("city2", JSON.stringify(cityName.value));
-// }
-// var lastCity2 = JSON.parse(localStorage.getItem("city2"));
-// searched2.textContent = lastCity2;
-
-//data.wind.speed; // for Wind speed in MPH
-// data.main.temp// temp in kelvin, needed to change to fahrenheit
-//data.main.humidity// humidity in %
-
-// ? -----------------------info for 5 days forecasts-------
-// data.data[i].datetime; // for date
-// data.data[i].temp // for temp
-//data.data[i].wind_spd) // for wind
-// data.data[i].rh // humidity
-// data.data[i].uv //uv index
+console.log("city 1 is - " + lastCity1);
+console.log("city 2 is - " + lastCity2);
+console.log("city 3 is - " + lastCity3);
+console.log("city 4 is - " + lastCity4);
+console.log("city 5 is - " + lastCity5);
