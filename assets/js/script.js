@@ -7,6 +7,7 @@ var date = document.querySelector("#displayDate");
 var temp = document.querySelector("#temp");
 var wind = document.querySelector("#wind");
 var humidity = document.querySelector("#humidity");
+var uv = document.querySelector("#uv");
 // declared variables for 5 days "DATE" forecasts
 var date1 = document.querySelector("#dateForecast1");
 var date2 = document.querySelector("#dateForecast2");
@@ -59,10 +60,23 @@ function get(link) {
       function text() {
         var i = 0;
 
+        //sets uv index color
+        function colors() {
+          if (data.data[i].uv < 3) {
+            uv.setAttribute("style", "background-color: green");
+          } else if (data.data[i].uv < 7 && data.data[i].uv > 3) {
+            uv.setAttribute("style", "background-color: yellow");
+          } else if (data.data[i].uv > 7) {
+            uv.setAttribute("style", "background-color: red");
+          } else return;
+        }
+        colors();
+
         date.textContent = link + "(" + data.data[i].datetime + ")";
         temp.textContent = "TEMP: " + data.data[i].temp + "℉";
         wind.textContent = "WIND: " + data.data[i].wind_spd + " MPH";
         humidity.textContent = "HUMIDITY: " + data.data[i].rh + "%";
+        uv.textContent = "UV index: " + data.data[i].uv;
 
         // -------Forecasts-----------------
         date1.textContent = "(" + data.data[i].datetime + ")";
@@ -157,8 +171,8 @@ function display() {
 
 display();
 
-console.log("city 1 is - " + lastCity1);
-console.log("city 2 is - " + lastCity2);
-console.log("city 3 is - " + lastCity3);
-console.log("city 4 is - " + lastCity4);
-console.log("city 5 is - " + lastCity5);
+// console.log("city 1 is - " + lastCity1);
+// console.log("city 2 is - " + lastCity2);
+// console.log("city 3 is - " + lastCity3);
+// console.log("city 4 is - " + lastCity4);
+// console.log("city 5 is - " + lastCity5);

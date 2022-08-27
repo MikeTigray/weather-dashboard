@@ -7,6 +7,25 @@
   height: 3.5rem;
   font-size: 2rem;
 }
+.inl {
+  display: inline-block;
+}
+#uv {
+  background-color: white;
+  width: fit-content;
+}
 .hidden {
   visibility: hidden;
+}
+@media screen and (max-width: 372px) {
+  .header {
+    font-size: 1rem;
+    height: fit-content;
+    width: 103vw;
+  }
+}
+@media screen and (max-width: 1120px) {
+  .inl {
+    display: block;
+  }
 }
