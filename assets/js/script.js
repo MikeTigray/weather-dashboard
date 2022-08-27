@@ -72,7 +72,8 @@ function get(link) {
         }
         colors();
 
-        date.textContent = link + "(" + data.data[i].datetime + ")";
+        date.textContent =
+          link.toUpperCase() + "(" + data.data[i].datetime + ")";
         temp.textContent = "TEMP: " + data.data[i].temp + "℉";
         wind.textContent = "WIND: " + data.data[i].wind_spd + " MPH";
         humidity.textContent = "HUMIDITY: " + data.data[i].rh + "%";
@@ -117,8 +118,11 @@ function get(link) {
       //This function displays search history and store cities input into local storage
       function history() {
         if (cityName.value != "") {
-          localStorage.setItem(storage[index], JSON.stringify(cityName.value));
-          searchHistory[index].textContent = cityName.value;
+          localStorage.setItem(
+            storage[index],
+            JSON.stringify(cityName.value).toUpperCase()
+          );
+          searchHistory[index].textContent = cityName.value.toUpperCase();
         }
       }
       if (index < 5) {
@@ -138,7 +142,7 @@ function get(link) {
       }
     });
 }
-
+//Targets search history buttons and shows clicked city data
 document.querySelector(".list-group").addEventListener(
   "click",
   function (e) {
@@ -146,11 +150,9 @@ document.querySelector(".list-group").addEventListener(
       get(e.target.textContent);
     } else return;
   },
-  notDisappear
+  display
 );
-function notDisappear() {
-  display();
-}
+
 //Retrieve stored cities and display them in search history
 var lastCity1 = JSON.parse(localStorage.getItem(storage[0]));
 var lastCity2 = JSON.parse(localStorage.getItem(storage[1]));
@@ -170,9 +172,3 @@ function display() {
 }
 
 display();
-
-// console.log("city 1 is - " + lastCity1);
-// console.log("city 2 is - " + lastCity2);
-// console.log("city 3 is - " + lastCity3);
-// console.log("city 4 is - " + lastCity4);
-// console.log("city 5 is - " + lastCity5);
