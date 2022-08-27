@@ -5,6 +5,9 @@
 body {
   background-color: aliceblue;
 }
+p {
+  font-size: 1rem;
+}
 .header {
   background-color: #256d85;
   height: 3.5rem;

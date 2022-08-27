@@ -1,8 +1,6 @@
-var APIkey = "7f6f2d99953fc081fdbbf025eed2d11f";
 var APIkeyForecast = "0e0e192396f34de1bf07cb631356eb62";
-
+var index = 0;
 var cityName = document.querySelector("#cityName");
-index = 0;
 var date = document.querySelector("#displayDate");
 var temp = document.querySelector("#temp");
 var wind = document.querySelector("#wind");
@@ -32,7 +30,7 @@ var humidity2 = document.querySelector("#humidityForecast2");
 var humidity3 = document.querySelector("#humidityForecast3");
 var humidity4 = document.querySelector("#humidityForecast4");
 var humidity5 = document.querySelector("#humidityForecast5");
-
+//variables for buttons
 var searchBtn = document.querySelector("#searchBtn");
 var searched1 = document.querySelector("#searched1");
 var searched2 = document.querySelector("#searched2");
@@ -44,6 +42,7 @@ var searchHistory = [searched1, searched2, searched3, searched4, searched5];
 //Array of strings to use as storage in local storage
 var storage = ["city1", "city2", "city3", "city4", "city5"];
 
+//when search button is clicked...execute function get() with user city input as argument to parameter
 searchBtn.addEventListener("click", function () {
   get(cityName.value);
 });
