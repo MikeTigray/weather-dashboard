@@ -2,8 +2,7 @@ var APIkey = "7f6f2d99953fc081fdbbf025eed2d11f";
 var APIkeyForecast = "0e0e192396f34de1bf07cb631356eb62";
 
 var cityName = document.querySelector("#cityName");
-var index = 0;
-
+index = 0;
 var date = document.querySelector("#displayDate");
 var temp = document.querySelector("#temp");
 var wind = document.querySelector("#wind");
@@ -44,24 +43,10 @@ var searchHistory = [searched1, searched2, searched3, searched4, searched5];
 //Array of strings to use as storage in local storage
 var storage = ["city1", "city2", "city3", "city4", "city5"];
 
-function display() {
-  var lastCity1 = JSON.parse(localStorage.getItem(storage[0]));
-  var lastCity2 = JSON.parse(localStorage.getItem(storage[1]));
-  var lastCity3 = JSON.parse(localStorage.getItem(storage[2]));
-  var lastCity4 = JSON.parse(localStorage.getItem(storage[3]));
-  var lastCity5 = JSON.parse(localStorage.getItem(storage[4]));
-  //   var retrieved = [lastCity1, lastCity2, lastCity3, lastCity4, lastCity5];
-  searched1.textContent = lastCity1;
-  searched2.textContent = lastCity2;
-  searched3.textContent = lastCity3;
-  searched4.textContent = lastCity4;
-  searched5.textContent = lastCity5;
-}
-
 searchBtn.addEventListener("click", function () {
   get(cityName.value);
 });
-display();
+
 function get(link) {
   var requestUrl5 = `https://api.weatherbit.io/v2.0/forecast/daily?days=5&units=I&city=${link}&key=${APIkeyForecast}`;
   fetch(requestUrl5)
@@ -117,35 +102,63 @@ function get(link) {
 
       //This function displays search history and store cities input into local storage
       function history() {
-        localStorage.setItem(storage[index], JSON.stringify(cityName.value));
+        if (cityName.value != "") {
+          localStorage.setItem(storage[index], JSON.stringify(cityName.value));
+          searchHistory[index].textContent = cityName.value;
+        }
       }
       if (index < 5) {
         history();
-        display();
 
         cityName.value = "";
-        searchHistory[index].textContent = retrieved[index];
+
         index++;
         // console.log(index);
       } else if (index == 5) {
         index = 0;
         history();
-        display();
 
         cityName.value = "";
-        searchHistory[index].textContent = retrieved[index];
+
         index++;
       }
     });
 }
 
-document.querySelector(".list-group").addEventListener("click", function (e) {
-  get(e.target.textContent);
-});
+document.querySelector(".list-group").addEventListener(
+  "click",
+  function (e) {
+    if (e.target.textContent != "") {
+      get(e.target.textContent);
+    } else return;
+  },
+  notDisappear
+);
+function notDisappear() {
+  display();
+}
+//Retrieve stored cities and display them in search history
+var lastCity1 = JSON.parse(localStorage.getItem(storage[0]));
+var lastCity2 = JSON.parse(localStorage.getItem(storage[1]));
+var lastCity3 = JSON.parse(localStorage.getItem(storage[2]));
+var lastCity4 = JSON.parse(localStorage.getItem(storage[3]));
+var lastCity5 = JSON.parse(localStorage.getItem(storage[4]));
+function display() {
+  searched1.textContent = lastCity1;
+
+  searched2.textContent = lastCity2;
+
+  searched3.textContent = lastCity3;
+
+  searched4.textContent = lastCity4;
+
+  searched5.textContent = lastCity5;
+}
+
 display();
 
-// console.log("city 1 is - " + lastCity1);
-// console.log("city 2 is - " + lastCity2);
-// console.log("city 3 is - " + lastCity3);
-// console.log("city 4 is - " + lastCity4);
-// console.log("city 5 is - " + lastCity5);
+console.log("city 1 is - " + lastCity1);
+console.log("city 2 is - " + lastCity2);
+console.log("city 3 is - " + lastCity3);
+console.log("city 4 is - " + lastCity4);
+console.log("city 5 is - " + lastCity5);
